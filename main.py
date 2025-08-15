@@ -5,9 +5,15 @@ pygame.init()
 pygame.display.set_caption("Loutish Therapy")
 # screen = pygame.display.set_mode(ScreenDimensions.dimensions, pygame.RESIZABLE)  
 screen = pygame.display.set_mode(ScreenDimensions.dimensions)
+homeScreen = True
 
-# defining a font
+# Defining a font
 smallfont = pygame.font.SysFont('Comic Sans',35)
+
+# Loading music
+pygame.mixer.init()
+pygame.mixer.music.load("Music/shelter.mp3")
+pygame.mixer.music.play()
 
 # Home Screen
 image = pygame.image.load("Game_Images/title_screen.png")
@@ -27,9 +33,10 @@ while True:
 
     # Home Buttons
     button_width, button_height = ButtonDimension.dimensions
-    createHomeButtons(screen=screen, button_width=button_width,
-                      button_height=button_height, color=LOUTISH_COLOR,
-                      font=smallfont, mouse=mouse)
+    if homeScreen:
+        createHomeButtons(screen=screen, button_width=button_width,
+                        button_height=button_height, color=LOUTISH_COLOR,
+                        font=smallfont, mouse=mouse)
 
     # Handle events  
     for event in pygame.event.get():  
