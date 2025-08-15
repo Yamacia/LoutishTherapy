@@ -1,0 +1,18 @@
+# Screen Dimensions
+
+SCREEN_WIDTH = 1280
+SCREEN_HEIGHT = 720
+
+class Dimensions:
+    def __init__(self, width, height):
+        self.dimensions = (width, height)
+
+ScreenDimensions = Dimensions(
+    width=SCREEN_WIDTH,
+    height=SCREEN_HEIGHT
+)
+
+TitleLogoDimension = Dimensions(
+    width=SCREEN_WIDTH/2,
+    height=SCREEN_HEIGHT/2
+)
