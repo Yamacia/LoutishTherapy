@@ -29,6 +29,11 @@ ButtonDimension = Dimensions(
 )
 
 LoutishImageDimension = Dimensions(
-    width=SCREEN_HEIGHT * 0.7,
+    width=SCREEN_WIDTH * 0.7,
     height=SCREEN_HEIGHT  * 0.7
+)
+
+endScreenDimension = Dimensions(
+    width=SCREEN_WIDTH * 0.4,
+    height=SCREEN_HEIGHT * 0.4
 )

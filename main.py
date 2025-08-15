@@ -7,8 +7,14 @@ pygame.display.set_caption("Loutish Therapy")
 screen = pygame.display.set_mode(ScreenDimensions.dimensions)
 homeScreen = True
 gameScreen, optionScreen, endScreen = False, False, False
+
+# Generating first Loutish image
 number_images = len(next(os.walk("Loutish_Images"))[2]) - 1
 LoutishImageID = random.randint(0, number_images)
+image_counter = 1
+
+# Primary Buttons
+button_width, button_height = ButtonDimension.dimensions
 
 # Defining a font
 smallfont = pygame.font.SysFont('Comic Sans',35)
@@ -26,8 +32,6 @@ while True:
     screen.fill(BACKGROUND_COLOR) 
     mouse = pygame.mouse.get_pos()
 
-    # Home Buttons
-    button_width, button_height = ButtonDimension.dimensions
     if homeScreen:
         
         # Home Screen
@@ -54,6 +58,16 @@ while True:
                         button_height=button_height, color=LOUTISH_COLOR,
                         font=smallfont, mouse=mouse)
         
+    if endScreen:
+        image = selectLoutishImage(LoutishImageID)
+        image = pygame.transform.scale(image, endScreenDimension.dimensions)
+        
+        centered_image_x, centered_image_y = image.get_rect(center=screen.get_rect().center).left, image.get_rect(center=screen.get_rect().center).top
+        image_position = (centered_image_x, 0) # Center End Image
+        screen.blit(image, dest = image_position)
+        createEndScreenCard(screen=screen, button_width=button_width,
+                        button_height=button_height, color=LOUTISH_COLOR,
+                        font=smallfont, mouse=mouse, image_counter=image_counter)
 
     # Handle events  
     for event in pygame.event.get():  
@@ -65,8 +79,11 @@ while True:
                 homeScreen, gameScreen, optionScreen = checkHomeButtonClick(screen=screen, button_width=button_width,
                             button_height=button_height, mouse=mouse)
             if gameScreen:
-                gameScreen, endScreen, LoutishImageID = checkGameButtonClick(screen=screen, button_width=button_width,
-                            button_height=button_height, mouse=mouse, image_id=LoutishImageID)
+                gameScreen, endScreen, LoutishImageID, image_counter = checkGameButtonClick(screen=screen, button_width=button_width,
+                            button_height=button_height, mouse=mouse, image_id=LoutishImageID, image_counter=image_counter)
+            if endScreen:
+                checkEndButtonClick(screen=screen, button_width=button_width,
+                            button_height=button_height, mouse=mouse)
         # elif event.type == pygame.VIDEORESIZE:
         #     image_resized_x, image_resized_y = screen.get_size()
         #     image = pygame.transform.scale(image, (image_resized_x/2, image_resized_y/2))
