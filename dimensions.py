@@ -27,3 +27,8 @@ ButtonDimension = Dimensions(
     width=BUTTON_WIDTH,
     height=BUTTON_HEIGHT
 )
+
+LoutishImageDimension = Dimensions(
+    width=SCREEN_HEIGHT * 0.7,
+    height=SCREEN_HEIGHT  * 0.7
+)
