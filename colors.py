@@ -1,8 +1,10 @@
+WHITE = (255,255,255)
+
 # Base Color
-BACKGROUND_COLOR = (151, 206, 247)
+BACKGROUND_COLOR = (151, 206, 247) #97CEF7
 
-class ColorRGB:
-    def __init__(self, rgb):
-        self.rgb = rgb
+# Loutish
+LOUTISH_COLOR = (255, 243, 83) #FFE454
 
-BackgroundColor = ColorRGB(BACKGROUND_COLOR)
+# Outline
+OUTLINE = (84, 35, 8) #552409
