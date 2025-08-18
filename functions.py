@@ -108,13 +108,13 @@ def createHomeButtons(screen, button_width, button_height, color, font, mouse):
         createButton(screen=screen, color_bg = WHITE, color_outline=color, 
                      position_x=third_button_x, position_y= third_button_y,
                      button_width=button_width, button_height=button_height,
-                     font=font, text="Quit", 
+                     font=font, text="Exit Application", 
                      text_pos = third_button_text_pos)
     else:
         createButton(screen=screen, color_bg = color, color_outline= OUTLINE, 
                      position_x=third_button_x, position_y= third_button_y,
                      button_width=button_width, button_height=button_height,
-                     font=font, text="Quit",
+                     font=font, text="Exit Application",
                      text_pos = third_button_text_pos)      
         
 def checkHomeButtonClick(screen, button_width, button_height, mouse):
@@ -309,18 +309,21 @@ def createEndScreen(screen, button_width, button_height, color, font, mouse, ima
         createButton(screen=screen, color_bg = WHITE, color_outline=color, 
                      position_x=end_button_x, position_y= end_button_y,
                      button_width=button_width, button_height=button_height,
-                     font=font, text="Quit", 
+                     font=font, text="Back to Home", 
                      text_pos = end_button_text_pos)
     else:
         createButton(screen=screen, color_bg = color, color_outline= OUTLINE, 
                      position_x=end_button_x, position_y= end_button_y,
                      button_width=button_width, button_height=button_height,
-                     font=font, text="Quit", 
+                     font=font, text="Back to Home", 
                      text_pos = end_button_text_pos)        
 
 def checkEndButtonClick(screen, button_width, button_height, mouse, image_counter):
     """
     """
+    homeScreen = False
+    EndScreen = True
+
     screen_left, screen_top, screen_width, screen_height = screen.get_rect()
     button_x = screen_width/2
     button_y = screen_height - button_height - BUTTON_SPACING
@@ -337,5 +340,7 @@ def checkEndButtonClick(screen, button_width, button_height, mouse, image_counte
         statistics.loc[len(statistics)] = [datetime.datetime.now(), image_counter]
         statistics.to_csv("statistics.csv", index=False)
 
-        pygame.quit()  
-        sys.exit()
+        homeScreen = True,
+        EndScreen = False
+
+    return homeScreen, EndScreen

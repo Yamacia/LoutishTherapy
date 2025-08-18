@@ -90,7 +90,7 @@ while True:
                 gameScreen, endScreen, LoutishImageID, image_counter = checkGameButtonClick(screen=screen, button_width=button_width,
                             button_height=button_height, mouse=mouse, image_id=LoutishImageID, image_counter=image_counter)
             elif endScreen:
-                checkEndButtonClick(screen=screen, button_width=button_width,
+                homeScreen, endScreen = checkEndButtonClick(screen=screen, button_width=button_width,
                             button_height=button_height, mouse=mouse,
                             image_counter=image_counter)
         # elif event.type == pygame.VIDEORESIZE:
