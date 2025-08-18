@@ -1,5 +1,13 @@
 from functions import *
 
+# First launch
+if not os.path.isfile("statistics.csv"):
+    statistics = pd.DataFrame(columns=[
+        "Date",
+        "Image Count"
+    ])
+    statistics.to_csv('statistics.csv', index=False)
+
 # Initialize PyGame
 pygame.init()
 pygame.display.set_caption("Loutish Therapy")
@@ -65,7 +73,7 @@ while True:
         centered_image_x, centered_image_y = image.get_rect(center=screen.get_rect().center).left, image.get_rect(center=screen.get_rect().center).top
         image_position = (centered_image_x, 0) # Center End Image
         screen.blit(image, dest = image_position)
-        createEndScreenCard(screen=screen, button_width=button_width,
+        createEndScreen(screen=screen, button_width=button_width,
                         button_height=button_height, color=LOUTISH_COLOR,
                         font=smallfont, mouse=mouse, image_counter=image_counter)
 
@@ -83,7 +91,8 @@ while True:
                             button_height=button_height, mouse=mouse, image_id=LoutishImageID, image_counter=image_counter)
             if endScreen:
                 checkEndButtonClick(screen=screen, button_width=button_width,
-                            button_height=button_height, mouse=mouse)
+                            button_height=button_height, mouse=mouse,
+                            image_counter=image_counter)
         # elif event.type == pygame.VIDEORESIZE:
         #     image_resized_x, image_resized_y = screen.get_size()
         #     image = pygame.transform.scale(image, (image_resized_x/2, image_resized_y/2))

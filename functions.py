@@ -3,6 +3,9 @@ import sys
 import os
 import random
 import time
+import pandas as pd
+import datetime
+
 from dimensions import *
 from colors import *
 
@@ -216,7 +219,6 @@ def checkGameButtonClick(screen, button_width, button_height, mouse, image_id, i
     # Left Button
     left_button_x = button_x - button_width/2
     left_button_y = button_y
-    left_button_text_pos = button_x, button_y + 0.5*button_height
 
     if checkMouseInButton(mouse=mouse, x = left_button_x, width= button_width,y = left_button_y, height= button_height):
         for i in range(0,10):
@@ -232,13 +234,11 @@ def checkGameButtonClick(screen, button_width, button_height, mouse, image_id, i
             screen.blit(image, dest = image_position)
             pygame.display.update()
             time.sleep(0.05)
-            print(image_id)
         image_counter += 1
     
     # Right Button
     right_button_x = 3*button_x - button_width/2
     right_button_y = button_y
-    right_button_text_pos = 3*button_x, button_y + 0.5*button_height
 
     if checkMouseInButton(mouse=mouse, x = right_button_x, width= button_width,y = right_button_y, height= button_height):
         gameScreen = False
@@ -246,25 +246,64 @@ def checkGameButtonClick(screen, button_width, button_height, mouse, image_id, i
 
     return gameScreen, endScreen, image_id, image_counter
 
-def createEndScreenCard(screen, button_width, button_height, color, font, mouse, image_counter):
+def createEndScreenCard(screen, screen_width, screen_height):
+    """
+    """
+    endgame_card_width = 2*screen_width/3
+    endgame_card_height = 0.6*screen_height
+    endgame_card_x = screen_width/2 - endgame_card_width/2
+    endgame_card_y = 0.69*screen_height - endgame_card_height/2
+
+    pygame.draw.rect(screen, ENDSCREEN, [endgame_card_x, endgame_card_y, endgame_card_width, endgame_card_height], border_radius = 30)
+    pygame.draw.rect(screen, OUTLINE, [endgame_card_x, endgame_card_y, endgame_card_width, endgame_card_height], width=5, border_radius = 30)
+
+def createEndScreenConclusion(screen, font, screen_width, screen_height, image_counter):
+    """
+    """
+    statistics = pd.read_csv("statistics.csv")
+    average_count = statistics.loc[:, "Image Count"].mean()
+    count_ratio = (image_counter / average_count)*100
+
+    if count_ratio < 100:
+        conclusion_message_stat = textOutline(font, f"That's {round(100 - count_ratio, 2)}% less than usual !", GREEN, OUTLINE)
+        conclusion_message_quote = textOutline(font, "Keep up the good work !", GREEN, OUTLINE)
+
+    elif count_ratio > 100:
+        conclusion_message_stat = textOutline(font, f"That's {round(count_ratio - 100, 2)}% more than usual !", RED, OUTLINE)
+        conclusion_message_quote = textOutline(font, "Don't give up ! You got this !", RED, OUTLINE)
+
+    else:
+        conclusion_message_stat = textOutline(font, f"You are exactly on average !", OUTLINE, OUTLINE)
+        conclusion_message_quote = textOutline(font, "That's impressive, good job !", OUTLINE, OUTLINE)
+
+    screen.blit(conclusion_message_stat, conclusion_message_stat.get_rect(center=(screen_width/2, screen_height*0.62)))
+    screen.blit(conclusion_message_quote, conclusion_message_quote.get_rect(center=(screen_width/2, screen_height*0.67)))
+
+def createEndScreen(screen, button_width, button_height, color, font, mouse, image_counter):
     """
     """
     screen_left, screen_top, screen_width, screen_height = screen.get_rect()
-    big_font = pygame.font.SysFont('Comic Sans',60)
 
+    createEndScreenCard(screen=screen, screen_width=screen_width, screen_height=screen_height)
+
+    big_font = pygame.font.SysFont('Comic Sans',60)
     title_message = big_font.render("You are cured !", True, OUTLINE)
-    screen.blit(title_message, title_message.get_rect(center=(screen_width/2, screen_height*0.42)))
+    screen.blit(title_message, title_message.get_rect(center=(screen_width/2, screen_height*0.43)))
 
     counter_message = font.render(f"It only took you {image_counter} image{"s" if image_counter > 1 else ""} !", True, OUTLINE)
     screen.blit(counter_message, counter_message.get_rect(center=(screen_width/2, screen_height*0.5)))
 
-    button_x = screen_width/2
-    button_y = screen_height - button_height - BUTTON_SPACING
+    # Generates the final conclusion
+    createEndScreenConclusion(screen=screen, font=font, screen_width=screen_width,
+                              screen_height=screen_height, image_counter=image_counter)
+
+    buttons_x = screen_width/2
+    buttons_y = screen_height - button_height - BUTTON_SPACING
 
     # End Button
-    end_button_x = button_x - button_width/2
-    end_button_y = button_y
-    end_button_text_pos = button_x, button_y + 0.5*button_height
+    end_button_x = buttons_x - button_width/2
+    end_button_y = buttons_y
+    end_button_text_pos = buttons_x, buttons_y + 0.5*button_height
 
     if checkMouseInButton(mouse=mouse, x = end_button_x, width= button_width,y = end_button_y, height= button_height):
         createButton(screen=screen, color_bg = WHITE, color_outline=color, 
@@ -279,7 +318,7 @@ def createEndScreenCard(screen, button_width, button_height, color, font, mouse,
                      font=font, text="Quit", 
                      text_pos = end_button_text_pos)        
 
-def checkEndButtonClick(screen, button_width, button_height, mouse):
+def checkEndButtonClick(screen, button_width, button_height, mouse, image_counter):
     """
     """
     screen_left, screen_top, screen_width, screen_height = screen.get_rect()
@@ -289,8 +328,14 @@ def checkEndButtonClick(screen, button_width, button_height, mouse):
     # End Button
     end_button_x = button_x - button_width/2
     end_button_y = button_y
-    end_button_text_pos = button_x, button_y + 0.5*button_height
 
+    # Clicked End button
     if checkMouseInButton(mouse=mouse, x = end_button_x, width= button_width,y = end_button_y, height= button_height):
+
+        # Saving Statistics
+        statistics = pd.read_csv("statistics.csv")
+        statistics.loc[len(statistics)] = [datetime.datetime.now(), image_counter]
+        statistics.to_csv("statistics.csv", index=False)
+
         pygame.quit()  
         sys.exit()
