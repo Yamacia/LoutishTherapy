@@ -86,10 +86,10 @@ while True:
             if homeScreen:
                 homeScreen, gameScreen, optionScreen = checkHomeButtonClick(screen=screen, button_width=button_width,
                             button_height=button_height, mouse=mouse)
-            if gameScreen:
+            elif gameScreen:
                 gameScreen, endScreen, LoutishImageID, image_counter = checkGameButtonClick(screen=screen, button_width=button_width,
                             button_height=button_height, mouse=mouse, image_id=LoutishImageID, image_counter=image_counter)
-            if endScreen:
+            elif endScreen:
                 checkEndButtonClick(screen=screen, button_width=button_width,
                             button_height=button_height, mouse=mouse,
                             image_counter=image_counter)
