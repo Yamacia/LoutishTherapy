@@ -6,8 +6,7 @@ def initializeGame():
     """
     pygame.init()
     pygame.display.set_caption("Loutish Therapy")
-    # screen = pygame.display.set_mode(ScreenDimensions.dimensions, pygame.RESIZABLE)  
-    screen = pygame.display.set_mode(ScreenDimensions.dimensions)
+    screen = pygame.display.set_mode(ScreenDimensions.dimensions, pygame.RESIZABLE)  
     return screen
 
 def initializeScreenState():
@@ -76,7 +75,188 @@ def textOutline(font, message, fontcolor, outlinecolor):
     img.set_colorkey(0)
     return img
 
-def createButton(screen, position_x, position_y, button_width, button_height,
+def getFontDimensions(screen):
+    """
+    Gets the dimensions of the main font used for the game. 
+    
+    Keyword arguments :
+        screen: Surface
+            Surface resolution used for image representation
+    """
+    # Check if default screen dimensions
+    if screen.get_size() == (SCREEN_WIDTH, SCREEN_HEIGHT):
+        return FONT_SIZE
+    
+    # Get current screen dimensions
+    screen_width = screen.get_width()
+    screen_height = screen.get_height()
+
+    # Get current screen ratios
+    screen_width_ratio = screen_width / SCREEN_WIDTH
+    screen_height_ratio = screen_height / SCREEN_HEIGHT
+
+    font_size = int(FONT_SIZE * min(screen_width_ratio, screen_height_ratio))
+
+    return font_size
+
+def getBigFontDimensions(screen):
+    """
+    Gets the dimensions of the bigger font used for the game. 
+    
+    Keyword arguments :
+        screen: Surface
+            Surface resolution used for image representation
+    """
+    # Check if default screen dimensions
+    if screen.get_size() == (SCREEN_WIDTH, SCREEN_HEIGHT):
+        return BIG_FONT_SIZE
+    
+    # Get current screen dimensions
+    screen_width = screen.get_width()
+    screen_height = screen.get_height()
+
+    # Get current screen ratios
+    screen_width_ratio = screen_width / SCREEN_WIDTH
+    screen_height_ratio = screen_height / SCREEN_HEIGHT
+
+    big_font_size = int(BIG_FONT_SIZE * min(screen_width_ratio, screen_height_ratio))
+
+    return big_font_size
+
+def getButtonDimensions(screen):
+    """
+    Gets the dimensions of the primary button used for the game. 
+    
+    Keyword arguments :
+        screen: Surface
+            Surface resolution used for image representation
+    """
+    # Check if default screen dimensions
+    if screen.get_size() == (SCREEN_WIDTH, SCREEN_HEIGHT):
+        return BUTTON_WIDTH, BUTTON_HEIGHT
+
+    # Get current screen dimensions
+    screen_width = screen.get_width()
+    screen_height = screen.get_height()
+
+    # Get button dimensions BASED on current screen dimensions
+    button_width = (screen_width // 3) * 0.95
+    button_height = (screen_height / 6) * 0.8 
+    
+    return button_width, button_height
+
+def getButtonOutlineDimensions(screen):
+    """
+    Gets the dimensions of the outline font used for the game's buttons. 
+    
+    Keyword arguments :
+        screen: Surface
+            Surface resolution used for image representation
+    """
+    # Check if default screen dimensions
+    if screen.get_size() == (SCREEN_WIDTH, SCREEN_HEIGHT):
+        return BUTTON_OUTLINE
+    
+    # Get current screen dimensions
+    screen_width = screen.get_width()
+    screen_height = screen.get_height()
+
+    # Get current screen ratios
+    screen_width_ratio = screen_width / SCREEN_WIDTH
+    screen_height_ratio = screen_height / SCREEN_HEIGHT
+
+    outline_width = max(1, int(BUTTON_OUTLINE * min(screen_width_ratio, screen_height_ratio)))
+
+    return outline_width
+
+
+def getButtonSpacing(screen):
+    """
+    Gets the width of the spacing used for the game's buttons. 
+    
+    Keyword arguments :
+        screen: Surface
+            Surface resolution used for image representation
+    """
+    # Check if default screen dimensions
+    if screen.get_size() == (SCREEN_WIDTH, SCREEN_HEIGHT):
+        return BUTTON_SPACING
+
+    # Get current screen height
+    screen_height = screen.get_height()
+    
+    # Get button spacing size BASED on current screen dimensions
+    button_spacing = screen_height // 25
+
+    return button_spacing
+
+def getLoutishLogoDimensions(screen):
+    """
+    Gets the dimensions of the Loutish Logo used for the game. 
+    
+    Keyword arguments :
+        screen: Surface
+            Surface resolution used for image representation
+    """
+    # Check if default screen dimensions
+    if screen.get_size() == (SCREEN_WIDTH, SCREEN_HEIGHT):
+        return TitleLogoDimension.dimensions
+    
+    # Get current screen dimensions
+    screen_width = screen.get_width()
+    screen_height = screen.get_height()
+
+    # Get button dimensions BASED on current screen dimensions
+    title_logo_width = screen_width / 2
+    title_logo_height = screen_height / 2
+
+    return title_logo_width, title_logo_height
+
+def getLoutishImageDimensions(screen):
+    """
+    Gets the dimensions of the Loutish Images in the game. 
+    
+    Keyword arguments :
+        screen: Surface
+            Surface resolution used for image representation
+    """
+    # Check if default screen dimensions
+    if screen.get_size() == (SCREEN_WIDTH, SCREEN_HEIGHT):
+        return LoutishImageDimension.dimensions
+    
+    # Get current screen dimensions
+    screen_width = screen.get_width()
+    screen_height = screen.get_height()
+
+    # Get button dimensions BASED on current screen dimensions
+    loutish_image_width = screen_width * 0.7
+    loutish_image_height = screen_height * 0.7
+
+    return loutish_image_width, loutish_image_height
+
+def getEndScreenLoutishDimensions(screen):
+    """
+    Gets the dimensions of the end screen picture. 
+    
+    Keyword arguments :
+        screen: Surface
+            Surface resolution used for image representation
+    """
+    # Check if default screen dimensions
+    if screen.get_size() == (SCREEN_WIDTH, SCREEN_HEIGHT):
+        return endScreenLoutishDimension.dimensions
+    
+    # Get current screen dimensions
+    screen_width = screen.get_width()
+    screen_height = screen.get_height()
+
+    # Get button dimensions BASED on current screen dimensions
+    endscreen_loutish_image_width = screen_width * 0.4
+    endscreen_loutish_image_height = screen_height * 0.4
+
+    return endscreen_loutish_image_width, endscreen_loutish_image_height
+
+def createButton(screen, position_x, position_y, button_width, button_height, button_outline, 
                   color_bg, color_outline, font, text, text_pos):
     """
     Generates a button that can be interacted with from the user's interface. 
@@ -94,6 +274,8 @@ def createButton(screen, position_x, position_y, button_width, button_height,
             The length of the created button
         button_height: float
             The height of the created button
+        button_outline: float
+            The outline width of the created button
         color_bg: tuple[int, int, int]
             The color of the created button's body, coded in RGB integers (0 to 255)
         color_outline: tuple [int, int, int]
@@ -107,7 +289,7 @@ def createButton(screen, position_x, position_y, button_width, button_height,
 
     """
     pygame.draw.rect(screen, color_bg, [position_x, position_y, button_width, button_height])
-    pygame.draw.rect(screen, color_outline, [position_x, position_y, button_width, button_height], 5)
+    pygame.draw.rect(screen, color_outline, [position_x, position_y, button_width, button_height], button_outline)
     message = font.render(text, True, OUTLINE)
     screen.blit(message, message.get_rect(center=text_pos))
 

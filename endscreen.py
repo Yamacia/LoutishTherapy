@@ -1,6 +1,6 @@
 from functions import *
 
-def createEndScreenCard(screen, screen_width, screen_height):
+def createEndScreenCard(screen, screen_width, screen_height, card_outline):
     """
     Generates the end game card and statistics.
 
@@ -11,6 +11,8 @@ def createEndScreenCard(screen, screen_width, screen_height):
             The width of the screen
         screen_height: float
             The height of the screen 
+        card_outline: float
+            The outline width of the created card
     """
     endgame_card_width = 2 * screen_width / 3
     endgame_card_height = 0.6 * screen_height
@@ -18,7 +20,8 @@ def createEndScreenCard(screen, screen_width, screen_height):
     endgame_card_y = 0.69 * screen_height - endgame_card_height / 2
 
     pygame.draw.rect(screen, ENDSCREEN, [endgame_card_x, endgame_card_y, endgame_card_width, endgame_card_height], border_radius = 30)
-    pygame.draw.rect(screen, OUTLINE, [endgame_card_x, endgame_card_y, endgame_card_width, endgame_card_height], width=5, border_radius = 30)
+    pygame.draw.rect(screen, OUTLINE, [endgame_card_x, endgame_card_y, endgame_card_width, endgame_card_height], 
+                    card_outline, border_radius = 30)
 
 def createEndScreenConclusion(screen, font, screen_width, screen_height, image_counter):
     """
@@ -55,7 +58,8 @@ def createEndScreenConclusion(screen, font, screen_width, screen_height, image_c
     screen.blit(conclusion_message_stat, conclusion_message_stat.get_rect(center = (screen_width / 2, screen_height * 0.62)))
     screen.blit(conclusion_message_quote, conclusion_message_quote.get_rect(center = (screen_width / 2, screen_height * 0.67)))
 
-def createEndScreen(screen, button_width, button_height, primary_color, font, mouse, image_counter):
+def createEndScreen(screen, button_width, button_height, button_spacing, button_outline,
+                    primary_color, font, mouse, image_counter):
     """
     Generates the end screen buttons, that gets highlighted if hovered by the user's mouse cursor
     as well as the end screen card and conclusions.
@@ -67,6 +71,10 @@ def createEndScreen(screen, button_width, button_height, primary_color, font, mo
             The width of the button
         button_height: float
             The height of the button    
+        button_spacing: float
+            The spacing surrounding a button 
+        button_outline: float
+            The outline width of the created button
         primary_color: tuple[int, int, int]
             The primary color used to create the buttons (body when not hovered, outline when hovered) 
             coded in RGB integers (0 to 255)
@@ -79,9 +87,9 @@ def createEndScreen(screen, button_width, button_height, primary_color, font, mo
     """
     screen_left, screen_top, screen_width, screen_height = screen.get_rect()
 
-    createEndScreenCard(screen = screen, screen_width = screen_width, screen_height = screen_height)
+    createEndScreenCard(screen = screen, screen_width = screen_width, screen_height = screen_height, card_outline = button_outline)
 
-    big_font = pygame.font.SysFont('Comic Sans', 60)
+    big_font = pygame.font.SysFont('Comic Sans', getBigFontDimensions(screen = screen))
     title_message = big_font.render("You are cured !", True, OUTLINE)
     screen.blit(title_message, title_message.get_rect(center = (screen_width / 2, screen_height * 0.43)))
 
@@ -93,7 +101,7 @@ def createEndScreen(screen, button_width, button_height, primary_color, font, mo
                               screen_height = screen_height, image_counter = image_counter)
 
     buttons_x = screen_width / 2
-    buttons_y = screen_height - button_height - BUTTON_SPACING
+    buttons_y = screen_height - button_height - button_spacing
 
     # End Button
     end_button_x = buttons_x - button_width / 2
@@ -105,16 +113,16 @@ def createEndScreen(screen, button_width, button_height, primary_color, font, mo
         createButton(screen = screen, color_bg = WHITE, color_outline = primary_color, 
                      position_x = end_button_x, position_y = end_button_y,
                      button_width = button_width, button_height = button_height,
-                     font = font, text = "Back to Home", 
+                     button_outline = button_outline, font = font, text = "Back to Home", 
                      text_pos = end_button_text_pos)
     else:
         createButton(screen = screen, color_bg = primary_color, color_outline = OUTLINE, 
                      position_x = end_button_x, position_y = end_button_y,
                      button_width = button_width, button_height = button_height,
-                     font = font, text = "Back to Home", 
+                     button_outline = button_outline, font = font, text = "Back to Home", 
                      text_pos = end_button_text_pos)        
 
-def checkEndButtonClick(screen, button_width, button_height, mouse, image_counter):
+def checkEndButtonClick(screen, button_width, button_height, button_spacing, mouse, image_counter):
     """
     Verifies if one of the end game buttons has been clicked by the user.
     Saves the image counter in a statistic CSV if user exits the game.
@@ -136,7 +144,7 @@ def checkEndButtonClick(screen, button_width, button_height, mouse, image_counte
 
     screen_left, screen_top, screen_width, screen_height = screen.get_rect()
     button_x = screen_width / 2
-    button_y = screen_height - button_height - BUTTON_SPACING
+    button_y = screen_height - button_height - button_spacing
 
     # End Button
     end_button_x = button_x - button_width / 2
@@ -156,7 +164,7 @@ def checkEndButtonClick(screen, button_width, button_height, mouse, image_counte
 
     return homeScreen, EndScreen
 
-def createEnd(screen, button_width, button_height, font, mouse, image_id, image_counter):
+def createEnd(screen, button_width, button_height, button_spacing, button_outline, font, mouse, image_id, image_counter):
     """
     Generates the Home Screen.
 
@@ -166,7 +174,11 @@ def createEnd(screen, button_width, button_height, font, mouse, image_id, image_
         button_width: float
             The width of the button
         button_height: float
-            The height of the button    
+            The height of the button
+        button_spacing: float
+            The spacing surrounding a button  
+        button_outline: float
+            The outline width of the created button  
         font: sysFont
             System Font loading all characteristics of the desired font for the message
         mouse: tuple[int, int]
@@ -177,11 +189,12 @@ def createEnd(screen, button_width, button_height, font, mouse, image_id, image_
             The number of Loutish images that have been generated so far
     """
     image = selectLoutishImage(image_id)
-    image = pygame.transform.scale(image, endScreenDimension.dimensions)
+    endscreen_loutish_dimensions = getEndScreenLoutishDimensions(screen = screen)
+    image = pygame.transform.scale(image, endscreen_loutish_dimensions)
     
     centered_image_x, centered_image_y = image.get_rect(center=screen.get_rect().center).left, image.get_rect(center=screen.get_rect().center).top
     image_position = (centered_image_x, 0) # Center End Image
     screen.blit(image, dest = image_position)
-    createEndScreen(screen = screen, button_width = button_width,
-                    button_height = button_height, primary_color = LOUTISH_COLOR,
+    createEndScreen(screen = screen, button_width = button_width, button_height = button_height, 
+                    button_spacing = button_spacing, button_outline = button_outline, primary_color = LOUTISH_COLOR,
                     font = font, mouse = mouse, image_counter = image_counter)

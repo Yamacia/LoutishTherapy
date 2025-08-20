@@ -33,7 +33,7 @@ LoutishImageDimension = Dimensions(
     height=SCREEN_HEIGHT  * 0.7
 )
 
-endScreenDimension = Dimensions(
+endScreenLoutishDimension = Dimensions(
     width=SCREEN_WIDTH * 0.4,
     height=SCREEN_HEIGHT * 0.4
 )

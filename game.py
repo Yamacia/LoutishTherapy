@@ -1,6 +1,6 @@
 from functions import *
 
-def createGameButtons(screen, button_width, button_height, primary_color, font, mouse):
+def createGameButtons(screen, button_width, button_height, button_spacing, button_outline, primary_color, font, mouse):
     """
     Generates the main game screen buttons, that gets highlighted if hovered by the user's mouse cursor.
 
@@ -11,6 +11,10 @@ def createGameButtons(screen, button_width, button_height, primary_color, font, 
             The width of the button
         button_height: float
             The height of the button    
+        button_spacing: float
+            The spacing surrounding a button    
+        button_outline: float
+            The outline width of the created button
         primary_color: tuple[int, int, int]
             The primary color used to create the buttons (body when not hovered, outline when hovered) 
             coded in RGB integers (0 to 255)
@@ -23,7 +27,7 @@ def createGameButtons(screen, button_width, button_height, primary_color, font, 
     screen_left, screen_top, screen_width, screen_height = screen.get_rect()
 
     button_x = screen_width / 4
-    button_y = screen_height - button_height - BUTTON_SPACING
+    button_y = screen_height - button_height - button_spacing
 
     # Left Button
     left_button_x = button_x - button_width / 2
@@ -36,13 +40,13 @@ def createGameButtons(screen, button_width, button_height, primary_color, font, 
         createButton(screen = screen, color_bg = WHITE, color_outline = primary_color, 
                      position_x = left_button_x, position_y = left_button_y,
                      button_width = button_width, button_height = button_height,
-                     font = font, text = "I need another !", 
+                     button_outline = button_outline, font = font, text = "I need another !", 
                      text_pos = left_button_text_pos)
     else:
         createButton(screen = screen, color_bg = primary_color, color_outline = OUTLINE, 
                      position_x = left_button_x, position_y = left_button_y,
                      button_width = button_width, button_height = button_height,
-                     font = font, text = "I need another !", 
+                     button_outline = button_outline, font = font, text = "I need another !", 
                      text_pos = left_button_text_pos)    
     
     # Right Button
@@ -56,16 +60,16 @@ def createGameButtons(screen, button_width, button_height, primary_color, font, 
         createButton(screen = screen, color_bg = WHITE, color_outline = primary_color, 
                      position_x = right_button_x, position_y = right_button_y,
                      button_width = button_width, button_height = button_height,
-                     font = font, text = "I am good !", 
+                     button_outline = button_outline, font = font, text = "I am good !", 
                      text_pos = right_button_text_pos)
     else:
         createButton(screen = screen, color_bg = primary_color, color_outline = OUTLINE, 
                      position_x = right_button_x, position_y = right_button_y,
                      button_width = button_width, button_height = button_height,
-                     font = font, text = "I am good !", 
+                     button_outline = button_outline, font = font, text = "I am good !", 
                      text_pos = right_button_text_pos)  
         
-def checkGameButtonClick(screen, button_width, button_height, mouse, image_id, image_counter):
+def checkGameButtonClick(screen, button_width, button_height, button_spacing, mouse, image_id, image_counter):
     """
     Verifies if one of the main game buttons has been clicked by the user.
 
@@ -76,6 +80,8 @@ def checkGameButtonClick(screen, button_width, button_height, mouse, image_id, i
             The width of the button
         button_height: float
             The height of the button  
+        button_spacing: float
+            The spacing surrounding a button    
         mouse: tuple[int, int]
             The cursor position of the mouse
         image_id: int
@@ -89,7 +95,7 @@ def checkGameButtonClick(screen, button_width, button_height, mouse, image_id, i
     screen_left, screen_top, screen_width, screen_height = screen.get_rect()
 
     button_x = screen_width / 4
-    button_y = screen_height - button_height - BUTTON_SPACING
+    button_y = screen_height - button_height - button_spacing
 
     # Left Button
     left_button_x = button_x - button_width / 2
@@ -107,7 +113,8 @@ def checkGameButtonClick(screen, button_width, button_height, mouse, image_id, i
             number_images = len(next(os.walk("Loutish_Images"))[2]) - 1
             image_id = random.randint(0, number_images)
             image = selectLoutishImage(image_id)
-            image = pygame.transform.scale(image, LoutishImageDimension.dimensions)
+            loutish_image_dimensions = getLoutishImageDimensions(screen = screen)
+            image = pygame.transform.scale(image, loutish_image_dimensions)
 
             centered_image_x, centered_image_y = image.get_rect(center=screen.get_rect().center).left, image.get_rect(center=screen.get_rect().center).top
             image_position = (centered_image_x, 0) # Center Image
@@ -129,7 +136,7 @@ def checkGameButtonClick(screen, button_width, button_height, mouse, image_id, i
 
     return gameScreen, endScreen, image_id, image_counter
 
-def createGame(screen, button_width, button_height, font, mouse, image_id):
+def createGame(screen, button_width, button_height, button_spacing, button_outline, font, mouse, image_id):
     """
     Generates the Home Screen.
 
@@ -140,6 +147,10 @@ def createGame(screen, button_width, button_height, font, mouse, image_id):
             The width of the button
         button_height: float
             The height of the button    
+        button_spacing: float
+            The spacing surrounding a button 
+        button_outline: float
+            The outline width of the created button   
         font: sysFont
             System Font loading all characteristics of the desired font for the message
         mouse: tuple[int, int]
@@ -148,11 +159,12 @@ def createGame(screen, button_width, button_height, font, mouse, image_id):
             The ID of the selected Loutish image
     """
     image = selectLoutishImage(image_id)
-    image = pygame.transform.scale(image, LoutishImageDimension.dimensions)
+    loutish_image_dimensions = getLoutishImageDimensions(screen = screen)
+    image = pygame.transform.scale(image, loutish_image_dimensions)
 
     centered_image_x, centered_image_y = image.get_rect(center=screen.get_rect().center).left, image.get_rect(center=screen.get_rect().center).top
     image_position = (centered_image_x, 0) # Center Image
     screen.blit(image, dest = image_position)
-    createGameButtons(screen = screen, button_width = button_width,
-                    button_height = button_height, primary_color = LOUTISH_COLOR,
+    createGameButtons(screen = screen, button_width = button_width, button_height = button_height, 
+                    button_spacing = button_spacing, button_outline = button_outline, primary_color = LOUTISH_COLOR,
                     font = font, mouse = mouse)
