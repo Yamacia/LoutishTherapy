@@ -11,6 +11,15 @@ from colors import *
 
 def textHollow(font, message, fontcolor):
     """
+    Renders the same message but as a hollow font, having only the outline of the text staying.
+
+    Keyword arguments : 
+        font: sysFont
+            System Font loading all characteristics of the desired font for the message
+        message: string
+            The message that needs to be hollowed
+        fontcolor: tuple[int, int, int]
+            The color used for the hollow message, coded in RGB integers (0 to 255)
     """
     notcolor = [c^0xFF for c in fontcolor]
     base = font.render(message, 0, fontcolor, notcolor)
@@ -30,6 +39,17 @@ def textHollow(font, message, fontcolor):
 
 def textOutline(font, message, fontcolor, outlinecolor):
     """
+    Renders the same message but ajusted with a colored outline.
+
+    Keyword arguments : 
+        font: sysFont
+            System Font loading all characteristics of the desired font for the message
+        message: string
+            The message that needs to be outlined
+        fontcolor: tuple[int, int, int]
+            The color used for the original message, coded in RGB integers (0 to 255)
+        outlinecolor: tuple[int, int, int]
+            The color used for the outline of the message, coded in RGB integers (0 to 255)
     """
     base = font.render(message, 0, fontcolor)
     outline = textHollow(font, message, outlinecolor)
@@ -42,21 +62,76 @@ def textOutline(font, message, fontcolor, outlinecolor):
 def createButton(screen, position_x, position_y, button_width, button_height,
                   color_bg, color_outline, font, text, text_pos):
     """
+    Generates a button that can be interacted with from the user's interface. 
+    Also gives it a colored outline
+    As well as changes color when hovered by the user's cursor
+
+    Keyword arguments :
+        screen: Surface 
+            Surface resolution used for image representation
+        position_x: float
+            Starting position of the created button (on the x-axis)
+        position_y: float
+            Starting position of the created button (on the y-axis)
+        button_width: float
+            The length of the created button
+        button_height: float
+            The height of the created button
+        color_bg: tuple[int, int, int]
+            The color of the created button's body, coded in RGB integers (0 to 255)
+        color_outline: tuple [int, int, int]
+            The color of the created button's outline, coded in RGB (0 to 255)
+        font: sysFont
+            System Font loading all characteristics of the desired font for the message
+        text: 
+            The text superposed on the created button
+        text_pos:
+            The position of the text on the screen (tailored to be positionned in the center of the button)
+
     """
     pygame.draw.rect(screen, color_bg, [position_x, position_y, button_width, button_height])
     pygame.draw.rect(screen, color_outline, [position_x, position_y, button_width, button_height], 5)
     message = font.render(text, True, OUTLINE)
     screen.blit(message, message.get_rect(center=text_pos))
 
-def checkMouseInButton(mouse, x, y, width, height):
+def checkMouseInButton(mouse, button_x, y, button_width, button_height):
     """
+    Verifies if the user's mouse cursor is hovering on a button
+
+    Keyword arguments: 
+        mouse: tuple[int, int]
+            The cursor position of the mouse
+        button_x: float
+            The starting positon of the button (on x-axis)
+        button_y: float
+            The starting positon of the button (on y-axis)
+        button_width: float
+            The width of the button
+        button_height: float
+            The height of the button        
     """
-    return mouse[0] > x and mouse[0] < x + width and mouse[1] > y and mouse[1] < y + height
+    return mouse[0] > button_x and mouse[0] < button_x + button_width and mouse[1] > y and mouse[1] < y + button_height
 
 
-def createHomeButtons(screen, button_width, button_height, color, font, mouse):
+def createHomeButtons(screen, button_width, button_height, primary_color, font, mouse):
     """
-    """
+    Generates the home screen buttons, that gets highlighted if hovered by the user's mouse cursor.
+
+    Keyword arguments:
+        screen: Surface 
+            Surface resolution used for image representation      
+        button_width: float
+            The width of the button
+        button_height: float
+            The height of the button    
+        primary_color: tuple[int, int, int]
+            The primary color used to create the buttons (body when not hovered, outline when hovered) 
+            coded in RGB integers (0 to 255)
+        font: sysFont
+            System Font loading all characteristics of the desired font for the message
+        mouse: tuple[int, int]
+            The cursor position of the mouse
+        """
     # Center Button
     screen_left, screen_top, screen_width, screen_height = screen.get_rect()
 
@@ -69,13 +144,13 @@ def createHomeButtons(screen, button_width, button_height, color, font, mouse):
     first_button_text_pos = screen_width/2, screen_height/2 + 0.5*button_height
 
     if checkMouseInButton(mouse=mouse, x = button_x, width= button_width,y = button_y, height= button_height):
-        createButton(screen=screen, color_bg = WHITE, color_outline=color, 
+        createButton(screen=screen, color_bg = WHITE, color_outline=primary_color, 
                      position_x=first_button_x, position_y= first_button_y,
                      button_width=button_width, button_height=button_height,
                      font=font, text="I need Therapy !", 
                      text_pos = first_button_text_pos)
     else:
-        createButton(screen=screen, color_bg = color, color_outline= OUTLINE, 
+        createButton(screen=screen, color_bg = primary_color, color_outline= OUTLINE, 
                      position_x=first_button_x, position_y= first_button_y,
                      button_width=button_width, button_height=button_height,
                      font=font, text="I need Therapy !", 
@@ -87,13 +162,13 @@ def createHomeButtons(screen, button_width, button_height, color, font, mouse):
     second_button_text_pos = screen_width/2, screen_height/2 + 1.5*button_height + 1*BUTTON_SPACING
 
     if checkMouseInButton(mouse=mouse, x = second_button_x, width= button_width, y = second_button_y, height= button_height):
-        createButton(screen=screen, color_bg = WHITE, color_outline=color, 
+        createButton(screen=screen, color_bg = WHITE, color_outline=primary_color, 
                      position_x=second_button_x, position_y= second_button_y,
                      button_width=button_width, button_height=button_height,
                      font=font, text="Settings", 
                      text_pos = second_button_text_pos)
     else:
-        createButton(screen=screen, color_bg = color, color_outline= OUTLINE, 
+        createButton(screen=screen, color_bg = primary_color, color_outline= OUTLINE, 
                      position_x=second_button_x, position_y= second_button_y,
                      button_width=button_width, button_height=button_height,
                      font=font, text="Settings",
@@ -105,13 +180,13 @@ def createHomeButtons(screen, button_width, button_height, color, font, mouse):
     third_button_text_pos = screen_width/2, screen_height/2 + 2.5*button_height + 2*BUTTON_SPACING
     
     if checkMouseInButton(mouse=mouse, x = third_button_x, width= button_width, y = third_button_y, height= button_height):
-        createButton(screen=screen, color_bg = WHITE, color_outline=color, 
+        createButton(screen=screen, color_bg = WHITE, color_outline=primary_color, 
                      position_x=third_button_x, position_y= third_button_y,
                      button_width=button_width, button_height=button_height,
                      font=font, text="Exit Application", 
                      text_pos = third_button_text_pos)
     else:
-        createButton(screen=screen, color_bg = color, color_outline= OUTLINE, 
+        createButton(screen=screen, color_bg = primary_color, color_outline= OUTLINE, 
                      position_x=third_button_x, position_y= third_button_y,
                      button_width=button_width, button_height=button_height,
                      font=font, text="Exit Application",
@@ -119,6 +194,17 @@ def createHomeButtons(screen, button_width, button_height, color, font, mouse):
         
 def checkHomeButtonClick(screen, button_width, button_height, mouse):
     """
+    Verifies if one of the home buttons has been clicked by the user.
+
+    Keyword arguments: 
+        screen: Surface 
+            Surface resolution used for image representation      
+        button_width: float
+            The width of the button
+        button_height: float
+            The height of the button  
+        mouse: tuple[int, int]
+            The cursor position of the mouse
     """
     homeScreen, gameScreen, optionScreen = False, False, False
 
@@ -155,6 +241,11 @@ def checkHomeButtonClick(screen, button_width, button_height, mouse):
 
 def selectLoutishImage(image_id):
     """
+    Selects the corresponding Loutish image from the images folder (by it's ID)
+
+    Keyword arguments:
+        image_id : int
+            The ID of the image that we want to select
     """
     images = next(os.walk("Loutish_Images"))[2]
     image = pygame.image.load(f"Loutish_Images/{images[image_id]}")
@@ -162,7 +253,23 @@ def selectLoutishImage(image_id):
 
 def createGameButtons(screen, button_width, button_height, color, font, mouse):
     """
-    """
+    Generates the main game screen buttons, that gets highlighted if hovered by the user's mouse cursor.
+
+    Keyword arguments:
+        screen: Surface 
+            Surface resolution used for image representation      
+        button_width: float
+            The width of the button
+        button_height: float
+            The height of the button    
+        primary_color: tuple[int, int, int]
+            The primary color used to create the buttons (body when not hovered, outline when hovered) 
+            coded in RGB integers (0 to 255)
+        font: sysFont
+            System Font loading all characteristics of the desired font for the message
+        mouse: tuple[int, int]
+            The cursor position of the mouse
+        """
     # Center Button
     screen_left, screen_top, screen_width, screen_height = screen.get_rect()
 
@@ -207,6 +314,21 @@ def createGameButtons(screen, button_width, button_height, color, font, mouse):
         
 def checkGameButtonClick(screen, button_width, button_height, mouse, image_id, image_counter):
     """
+    Verifies if one of the main game buttons has been clicked by the user.
+
+    Keyword arguments: 
+        screen: Surface 
+            Surface resolution used for image representation      
+        button_width: float
+            The width of the button
+        button_height: float
+            The height of the button  
+        mouse: tuple[int, int]
+            The cursor position of the mouse
+        image_id: int
+            The ID of the selected Loutish image
+        image_counter: int
+            The number of Loutish images that have been generated so far
     """
     gameScreen, endScreen = True, False
 
@@ -220,7 +342,10 @@ def checkGameButtonClick(screen, button_width, button_height, mouse, image_id, i
     left_button_x = button_x - button_width/2
     left_button_y = button_y
 
+    # Image Generation button
+
     if checkMouseInButton(mouse=mouse, x = left_button_x, width= button_width,y = left_button_y, height= button_height):
+        # Generates another image and updates the image counter
         for i in range(0,10):
             screen.fill(BACKGROUND_COLOR, (0, 0, screen_width, screen_height*0.75)) 
 
@@ -240,6 +365,8 @@ def checkGameButtonClick(screen, button_width, button_height, mouse, image_id, i
     right_button_x = 3*button_x - button_width/2
     right_button_y = button_y
 
+    # Exit button
+
     if checkMouseInButton(mouse=mouse, x = right_button_x, width= button_width,y = right_button_y, height= button_height):
         gameScreen = False
         endScreen = True
@@ -248,6 +375,15 @@ def checkGameButtonClick(screen, button_width, button_height, mouse, image_id, i
 
 def createEndScreenCard(screen, screen_width, screen_height):
     """
+    Generates the end game card and statistics.
+
+    Keyword arguments:
+        screen: Surface 
+            Surface resolution used for image representation      
+        screen_width: float
+            The width of the screen
+        screen_height: float
+            The height of the screen 
     """
     endgame_card_width = 2*screen_width/3
     endgame_card_height = 0.6*screen_height
@@ -259,6 +395,19 @@ def createEndScreenCard(screen, screen_width, screen_height):
 
 def createEndScreenConclusion(screen, font, screen_width, screen_height, image_counter):
     """
+    Generates the end screen conclusion (based on session's statistics).
+
+    Keyword arugments:
+        screen: Surface 
+            Surface resolution used for image representation      
+        font: sysFont
+            System Font loading all characteristics of the desired font for the message
+        screen_width: float
+            The width of the screen
+        screen_height: float
+            The height of the screen 
+        image_counter: int
+            The number of Loutish images that have been generated so far
     """
     statistics = pd.read_csv("statistics.csv")
     average_count = statistics.loc[:, "Image Count"].mean()
@@ -279,8 +428,27 @@ def createEndScreenConclusion(screen, font, screen_width, screen_height, image_c
     screen.blit(conclusion_message_stat, conclusion_message_stat.get_rect(center=(screen_width/2, screen_height*0.62)))
     screen.blit(conclusion_message_quote, conclusion_message_quote.get_rect(center=(screen_width/2, screen_height*0.67)))
 
-def createEndScreen(screen, button_width, button_height, color, font, mouse, image_counter):
+def createEndScreen(screen, button_width, button_height, primary_color, font, mouse, image_counter):
     """
+    Generates the end screen buttons, that gets highlighted if hovered by the user's mouse cursor
+    as well as the end screen card and conclusions.
+
+    Keyword arguments:
+        screen: Surface 
+            Surface resolution used for image representation      
+        button_width: float
+            The width of the button
+        button_height: float
+            The height of the button    
+        primary_color: tuple[int, int, int]
+            The primary color used to create the buttons (body when not hovered, outline when hovered) 
+            coded in RGB integers (0 to 255)
+        font: sysFont
+            System Font loading all characteristics of the desired font for the message
+        mouse: tuple[int, int]
+            The cursor position of the mouse
+        image_counter: int
+            The number of Loutish images that have been generated so far
     """
     screen_left, screen_top, screen_width, screen_height = screen.get_rect()
 
@@ -306,13 +474,13 @@ def createEndScreen(screen, button_width, button_height, color, font, mouse, ima
     end_button_text_pos = buttons_x, buttons_y + 0.5*button_height
 
     if checkMouseInButton(mouse=mouse, x = end_button_x, width= button_width,y = end_button_y, height= button_height):
-        createButton(screen=screen, color_bg = WHITE, color_outline=color, 
+        createButton(screen=screen, color_bg = WHITE, color_outline=primary_color, 
                      position_x=end_button_x, position_y= end_button_y,
                      button_width=button_width, button_height=button_height,
                      font=font, text="Back to Home", 
                      text_pos = end_button_text_pos)
     else:
-        createButton(screen=screen, color_bg = color, color_outline= OUTLINE, 
+        createButton(screen=screen, color_bg = primary_color, color_outline= OUTLINE, 
                      position_x=end_button_x, position_y= end_button_y,
                      button_width=button_width, button_height=button_height,
                      font=font, text="Back to Home", 
@@ -320,6 +488,20 @@ def createEndScreen(screen, button_width, button_height, color, font, mouse, ima
 
 def checkEndButtonClick(screen, button_width, button_height, mouse, image_counter):
     """
+    Verifies if one of the end game buttons has been clicked by the user.
+    Saves the image counter in a statistic CSV if user exits the game.
+
+    Keyword arguments: 
+        screen: Surface 
+            Surface resolution used for image representation      
+        button_width: float
+            The width of the button
+        button_height: float
+            The height of the button  
+        mouse: tuple[int, int]
+            The cursor position of the mouse
+        image_counter: int
+            The number of Loutish images that have been generated so far
     """
     homeScreen = False
     EndScreen = True
