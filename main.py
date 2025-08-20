@@ -1,4 +1,8 @@
 from functions import *
+from home import *
+from game import *
+from options import *
+from endscreen import *
 
 # First launch
 if not os.path.isfile("statistics.csv"):
@@ -50,7 +54,7 @@ while True:
         image_position = (centered_image_x, 0) # Center Title Logo
         screen.blit(image, dest = image_position)
         createHomeButtons(screen=screen, button_width=button_width,
-                        button_height=button_height, color=LOUTISH_COLOR,
+                        button_height=button_height, primary_color=LOUTISH_COLOR,
                         font=smallfont, mouse=mouse)
         
     if gameScreen:
@@ -63,7 +67,7 @@ while True:
         image_position = (centered_image_x, 0) # Center Image
         screen.blit(image, dest = image_position)
         createGameButtons(screen=screen, button_width=button_width,
-                        button_height=button_height, color=LOUTISH_COLOR,
+                        button_height=button_height, primary_color=LOUTISH_COLOR,
                         font=smallfont, mouse=mouse)
         
     if endScreen:
@@ -74,7 +78,7 @@ while True:
         image_position = (centered_image_x, 0) # Center End Image
         screen.blit(image, dest = image_position)
         createEndScreen(screen=screen, button_width=button_width,
-                        button_height=button_height, color=LOUTISH_COLOR,
+                        button_height=button_height, primary_color=LOUTISH_COLOR,
                         font=smallfont, mouse=mouse, image_counter=image_counter)
 
     # Handle events  
