@@ -128,3 +128,31 @@ def checkGameButtonClick(screen, button_width, button_height, mouse, image_id, i
         endScreen = True
 
     return gameScreen, endScreen, image_id, image_counter
+
+def createGame(screen, button_width, button_height, font, mouse, image_id):
+    """
+    Generates the Home Screen.
+
+    Keyword arguments:
+        screen: Surface
+            Surface resolution used for image representation      
+        button_width: float
+            The width of the button
+        button_height: float
+            The height of the button    
+        font: sysFont
+            System Font loading all characteristics of the desired font for the message
+        mouse: tuple[int, int]
+            The cursor position of the mouse
+        image_id: int
+            The ID of the selected Loutish image
+    """
+    image = selectLoutishImage(image_id)
+    image = pygame.transform.scale(image, LoutishImageDimension.dimensions)
+
+    centered_image_x, centered_image_y = image.get_rect(center=screen.get_rect().center).left, image.get_rect(center=screen.get_rect().center).top
+    image_position = (centered_image_x, 0) # Center Image
+    screen.blit(image, dest = image_position)
+    createGameButtons(screen = screen, button_width = button_width,
+                    button_height = button_height, primary_color = LOUTISH_COLOR,
+                    font = font, mouse = mouse)

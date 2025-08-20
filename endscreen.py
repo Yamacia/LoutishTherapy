@@ -81,7 +81,7 @@ def createEndScreen(screen, button_width, button_height, primary_color, font, mo
 
     createEndScreenCard(screen = screen, screen_width = screen_width, screen_height = screen_height)
 
-    big_font = pygame.font.SysFont('Comic Sans',60)
+    big_font = pygame.font.SysFont('Comic Sans', 60)
     title_message = big_font.render("You are cured !", True, OUTLINE)
     screen.blit(title_message, title_message.get_rect(center = (screen_width / 2, screen_height * 0.43)))
 
@@ -155,3 +155,33 @@ def checkEndButtonClick(screen, button_width, button_height, mouse, image_counte
         EndScreen = False
 
     return homeScreen, EndScreen
+
+def createEnd(screen, button_width, button_height, font, mouse, image_id, image_counter):
+    """
+    Generates the Home Screen.
+
+    Keyword arguments:
+        screen: Surface
+            Surface resolution used for image representation      
+        button_width: float
+            The width of the button
+        button_height: float
+            The height of the button    
+        font: sysFont
+            System Font loading all characteristics of the desired font for the message
+        mouse: tuple[int, int]
+            The cursor position of the mouse
+        image_id: int
+            The ID of the selected Loutish image
+        image_counter: int
+            The number of Loutish images that have been generated so far
+    """
+    image = selectLoutishImage(image_id)
+    image = pygame.transform.scale(image, endScreenDimension.dimensions)
+    
+    centered_image_x, centered_image_y = image.get_rect(center=screen.get_rect().center).left, image.get_rect(center=screen.get_rect().center).top
+    image_position = (centered_image_x, 0) # Center End Image
+    screen.blit(image, dest = image_position)
+    createEndScreen(screen = screen, button_width = button_width,
+                    button_height = button_height, primary_color = LOUTISH_COLOR,
+                    font = font, mouse = mouse, image_counter = image_counter)

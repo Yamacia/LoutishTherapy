@@ -1,5 +1,31 @@
 from librairies import *
 
+def initializeGame():
+    """
+    Initialize the game screen and resolution with the default size.
+    """
+    pygame.init()
+    pygame.display.set_caption("Loutish Therapy")
+    # screen = pygame.display.set_mode(ScreenDimensions.dimensions, pygame.RESIZABLE)  
+    screen = pygame.display.set_mode(ScreenDimensions.dimensions)
+    return screen
+
+def initializeScreenState():
+    """
+    Initialize the status of each screen, and set home screen as the open one.
+    """
+    homeScreen = True
+    gameScreen, optionScreen, endScreen = False, False, False
+    return homeScreen, gameScreen, optionScreen, endScreen
+
+def loadMusic():
+    """
+    Load the game's music.
+    """
+    pygame.mixer.init()
+    pygame.mixer.music.load(f"Music/{MAIN_MUSIC}")
+    pygame.mixer.music.play()
+
 def textHollow(font, message, fontcolor):
     """
     Renders the same message but as a hollow font, having only the outline of the text staying.

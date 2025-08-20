@@ -1,7 +1,5 @@
+# True White
 WHITE = (255,255,255)
-
-# Base Color
-BACKGROUND_COLOR = (151, 206, 247) #97CEF7
 
 # Loutish
 LOUTISH_COLOR = (255, 243, 83) #FFE454

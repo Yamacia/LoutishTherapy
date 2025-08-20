@@ -133,4 +133,30 @@ def checkHomeButtonClick(screen, button_width, button_height, mouse):
         sys.exit()
     else:
         homeScreen = True
-    return homeScreen, gameScreen, optionScreen       
+    return homeScreen, gameScreen, optionScreen 
+
+def createHome(screen, button_width, button_height, font, mouse):
+    """
+    Generates the Home Screen.
+
+    Keyword arguments:
+        screen: Surface
+            Surface resolution used for image representation      
+        button_width: float
+            The width of the button
+        button_height: float
+            The height of the button    
+        font: sysFont
+            System Font loading all characteristics of the desired font for the message
+        mouse: tuple[int, int]
+            The cursor position of the mouse
+    """
+    image = pygame.image.load("Game_Images/title_screen.png")
+    image = pygame.transform.scale(image, TitleLogoDimension.dimensions)
+
+    centered_image_x, centered_image_y = image.get_rect(center=screen.get_rect().center).left, image.get_rect(center=screen.get_rect().center).top
+    image_position = (centered_image_x, 0) # Center Title Logo
+    screen.blit(image, dest = image_position)
+    createHomeButtons(screen = screen, button_width = button_width,
+                    button_height = button_height, primary_color = LOUTISH_COLOR,
+                    font = font, mouse = mouse)
