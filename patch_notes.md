@@ -1,0 +1,25 @@
+<h1> Patch Notes </h1>
+
+<h3> <u> August 15th 2025 </u> </h3>
+    - Created Homepage <br>
+    - Added Buttons to Homepage <br>
+    - Added a .gitignore file <br>
+    - Implemented music <br>
+    - Implemented the early works of the Loutish Therapy Game <br>
+    - Implemented the End Screen and Exit Buttons
+
+<h3> <u> August 18th 2025 </u> </h3>
+    - Implemented functions for Text Outline <br>
+    - Screated and End Screen Card with Basic Statistics <br>
+    - Bugfixed game registering multiple outputs in one click <br>
+    - End Screen now goes back to Home Screen instead of exiting the game <br>
+
+<h3> <u> August 18th 2025 </u> </h3>
+    - Writed Docstring to all Important Functions <br>
+    - Seperated functions by Corresponding Python Files<br>
+    - Cleaned main.py and moved functions to corresponding files <br>
+    - Game can now be properly resized by user
+
+<h3> <u> August 27 2025 </u> </h3>
+    - Turned the screen's state values into a dedicated ScreenState class <br>
+    - Added the files "future_patches" and "patch_notes" <br>
