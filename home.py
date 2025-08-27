@@ -89,7 +89,7 @@ def createHomeButtons(screen, button_width, button_height, button_spacing, butto
                      button_outline = button_outline, font = font, text = "Exit Application",
                      text_pos = third_button_text_pos)      
         
-def checkHomeButtonClick(screen, button_width, button_height, button_spacing, mouse):
+def checkHomeButtonClick(screen, button_width, button_height, button_spacing, mouse, current_screen_state):
     """
     Verifies if one of the home buttons has been clicked by the user.
 
@@ -104,8 +104,9 @@ def checkHomeButtonClick(screen, button_width, button_height, button_spacing, mo
             The spacing surrounding a button    
         mouse: tuple[int, int]
             The cursor position of the mouse
+        current_screen_state: int
+            The current screen the user is on
     """
-    homeScreen, gameScreen, optionScreen = False, False, False
 
     # Center Button
     screen_left, screen_top, screen_width, screen_height = screen.get_rect()
@@ -127,19 +128,17 @@ def checkHomeButtonClick(screen, button_width, button_height, button_spacing, mo
 
     if checkMouseInButton(mouse = mouse, button_x = first_button_x, button_width = button_width, 
                           button_y = first_button_y, button_height = button_height):
-        gameScreen = True     
+        current_screen_state.set_value(ScreenValue.GAME.value)     
 
     elif checkMouseInButton(mouse = mouse, button_x = second_button_x, button_width = button_width,
                             button_y = second_button_y, button_height = button_height):
-        optionScreen = True
+        current_screen_state.set_value(ScreenValue.OPTION.value)     
     
     elif checkMouseInButton(mouse = mouse, button_x = third_button_x, button_width = button_width, 
                             button_y = third_button_y, button_height = button_height):
         pygame.quit()  
         sys.exit()
-    else:
-        homeScreen = True
-    return homeScreen, gameScreen, optionScreen 
+    return current_screen_state
 
 def createHome(screen, button_width, button_height, button_spacing, button_outline, font, mouse):
     """

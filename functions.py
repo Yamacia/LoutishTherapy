@@ -1,4 +1,5 @@
 from librairies import *
+from classes import *
 
 def initializeGame():
     """
@@ -11,11 +12,10 @@ def initializeGame():
 
 def initializeScreenState():
     """
-    Initialize the status of each screen, and set home screen as the open one.
+    Initialize the screen state class and sets the home screen as the open one.
     """
-    homeScreen = True
-    gameScreen, optionScreen, endScreen = False, False, False
-    return homeScreen, gameScreen, optionScreen, endScreen
+    
+    return ScreenState(value = ScreenValue.HOME.value)
 
 def loadMusic():
     """

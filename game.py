@@ -69,7 +69,7 @@ def createGameButtons(screen, button_width, button_height, button_spacing, butto
                      button_outline = button_outline, font = font, text = "I am good !", 
                      text_pos = right_button_text_pos)  
         
-def checkGameButtonClick(screen, button_width, button_height, button_spacing, mouse, image_id, image_counter):
+def checkGameButtonClick(screen, button_width, button_height, button_spacing, mouse, image_id, image_counter, current_screen_state):
     """
     Verifies if one of the main game buttons has been clicked by the user.
 
@@ -88,8 +88,9 @@ def checkGameButtonClick(screen, button_width, button_height, button_spacing, mo
             The ID of the selected Loutish image
         image_counter: int
             The number of Loutish images that have been generated so far
+        current_screen_state: int
+            The current screen the user is on
     """
-    gameScreen, endScreen = True, False
 
     # Center Button
     screen_left, screen_top, screen_width, screen_height = screen.get_rect()
@@ -131,10 +132,9 @@ def checkGameButtonClick(screen, button_width, button_height, button_spacing, mo
 
     if checkMouseInButton(mouse = mouse, button_x = right_button_x, button_width = button_width, 
                           button_y = right_button_y, button_height = button_height):
-        gameScreen = False
-        endScreen = True
+        current_screen_state.set_value(ScreenValue.END.value)
 
-    return gameScreen, endScreen, image_id, image_counter
+    return current_screen_state, image_id, image_counter
 
 def createGame(screen, button_width, button_height, button_spacing, button_outline, font, mouse, image_id):
     """

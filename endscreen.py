@@ -122,7 +122,7 @@ def createEndScreen(screen, button_width, button_height, button_spacing, button_
                      button_outline = button_outline, font = font, text = "Back to Home", 
                      text_pos = end_button_text_pos)        
 
-def checkEndButtonClick(screen, button_width, button_height, button_spacing, mouse, image_counter):
+def checkEndButtonClick(screen, button_width, button_height, button_spacing, mouse, image_counter, current_screen_state):
     """
     Verifies if one of the end game buttons has been clicked by the user.
     Saves the image counter in a statistic CSV if user exits the game.
@@ -138,9 +138,9 @@ def checkEndButtonClick(screen, button_width, button_height, button_spacing, mou
             The cursor position of the mouse
         image_counter: int
             The number of Loutish images that have been generated so far
+        current_screen_state: int
+            The current screen the user is on
     """
-    homeScreen = False
-    EndScreen = True
 
     screen_left, screen_top, screen_width, screen_height = screen.get_rect()
     button_x = screen_width / 2
@@ -159,10 +159,9 @@ def checkEndButtonClick(screen, button_width, button_height, button_spacing, mou
         statistics.loc[len(statistics)] = [datetime.datetime.now(), image_counter]
         statistics.to_csv("statistics.csv", index=False)
 
-        homeScreen = True,
-        EndScreen = False
+        current_screen_state.set_value(ScreenValue.HOME.value)
 
-    return homeScreen, EndScreen
+    return current_screen_state
 
 def createEnd(screen, button_width, button_height, button_spacing, button_outline, font, mouse, image_id, image_counter):
     """

@@ -21,3 +21,10 @@ class MouseAction(Enum):
     LEFT_CLICK = 1
     SCROLL_WHEEL = 2
     RIGHT_CLICK = 3
+
+# All Possible Screens
+class ScreenValue(Enum):
+    HOME = 1
+    GAME = 2
+    END = 3
+    OPTION = 4
