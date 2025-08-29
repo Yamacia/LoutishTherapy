@@ -9,6 +9,11 @@ BUTTON_WIDTH = (SCREEN_WIDTH // 3) * 0.95
 BUTTON_HEIGHT = ((SCREEN_HEIGHT / 2) // 3) * 0.80
 BUTTON_SPACING = SCREEN_HEIGHT // 25
 
+# Option Button Dimensions
+
+OPTION_BUTTON_WIDTH = (SCREEN_WIDTH // 3) * 0.95
+OPTION_BUTTON_HEIGHT = ((SCREEN_HEIGHT / 2) // 3) * 0.60
+
 class Dimensions:
     def __init__(self, width, height):
         self.dimensions = (width, height)
@@ -28,12 +33,22 @@ ButtonDimension = Dimensions(
     height=BUTTON_HEIGHT
 )
 
+OptionButtonDimension = Dimensions(
+    width=OPTION_BUTTON_WIDTH,
+    height=OPTION_BUTTON_HEIGHT
+)
+
 LoutishImageDimension = Dimensions(
     width=SCREEN_WIDTH * 0.7,
     height=SCREEN_HEIGHT  * 0.7
 )
 
 endScreenLoutishDimension = Dimensions(
+    width=SCREEN_WIDTH * 0.4,
+    height=SCREEN_HEIGHT * 0.4
+)
+
+optionLogoDimension = Dimensions(
     width=SCREEN_WIDTH * 0.4,
     height=SCREEN_HEIGHT * 0.4
 )

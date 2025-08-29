@@ -24,6 +24,10 @@ image_counter = 1
 
 # Primary Buttons
 button_width, button_height = ButtonDimension.dimensions
+
+# Option Buttons
+option_button_width, option_button_height = OptionButtonDimension.dimensions
+
 button_spacing = BUTTON_SPACING
 button_outline = BUTTON_OUTLINE
 
@@ -48,6 +52,12 @@ while True:
         createHome(screen = screen, button_width = button_width, button_height = button_height, button_spacing = button_spacing,
                    button_outline = button_outline, font = font, mouse = mouse)
         
+    if current_screen_state.get_value() == ScreenValue.OPTION.value:
+
+        # Option Screen
+        createOption(screen = screen, button_width = option_button_width, button_height = option_button_height, button_spacing = button_spacing,
+                   button_outline = button_outline, font = font, mouse = mouse)
+        
     if current_screen_state.get_value() == ScreenValue.GAME.value:
 
         # Game Screen
@@ -67,6 +77,11 @@ while True:
             # Check in what screen we are in
             if current_screen_state.get_value() == ScreenValue.HOME.value:
                 current_screen_state = checkHomeButtonClick(screen = screen, button_width = button_width,
+                            button_height = button_height, button_spacing = button_spacing, mouse = mouse,
+                            current_screen_state = current_screen_state)
+                
+            elif current_screen_state.get_value() == ScreenValue.OPTION.value:
+                current_screen_state = checkOptionButtonClick(screen = screen, button_width = button_width,
                             button_height = button_height, button_spacing = button_spacing, mouse = mouse,
                             current_screen_state = current_screen_state)
                 

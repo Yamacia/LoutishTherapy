@@ -89,7 +89,7 @@ def createEndScreen(screen, button_width, button_height, button_spacing, button_
 
     createEndScreenCard(screen = screen, screen_width = screen_width, screen_height = screen_height, card_outline = button_outline)
 
-    big_font = pygame.font.SysFont('Comic Sans', getBigFontDimensions(screen = screen))
+    big_font = pygame.font.SysFont(MAIN_FONT, getLargeFontDimensions(screen = screen))
     title_message = big_font.render("You are cured !", True, OUTLINE)
     screen.blit(title_message, title_message.get_rect(center = (screen_width / 2, screen_height * 0.43)))
 

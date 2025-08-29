@@ -4,8 +4,11 @@ from librairies import Enum
 MAIN_FONT = 'Comic Sans'
 
 # Default Font Size
+TINY_FONT_SIZE = 25
+SMALL_FONT_SIZE = 30
 FONT_SIZE = 35
-BIG_FONT_SIZE = 60
+BIG_FONT_SIZE = 45
+LARGE_FONT_SIZE = 60
 
 # Main Music
 MAIN_MUSIC = "shelter.mp3"

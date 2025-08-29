@@ -99,6 +99,54 @@ def getFontDimensions(screen):
 
     return font_size
 
+def getTinyFontDimensions(screen):
+    """
+    Gets the dimensions of the tiny font used for the game. 
+    
+    Keyword arguments :
+        screen: Surface
+            Surface resolution used for image representation
+    """
+    # Check if default screen dimensions
+    if screen.get_size() == (SCREEN_WIDTH, SCREEN_HEIGHT):
+        return TINY_FONT_SIZE
+    
+    # Get current screen dimensions
+    screen_width = screen.get_width()
+    screen_height = screen.get_height()
+
+    # Get current screen ratios
+    screen_width_ratio = screen_width / SCREEN_WIDTH
+    screen_height_ratio = screen_height / SCREEN_HEIGHT
+
+    tiny_font_size = int(TINY_FONT_SIZE * min(screen_width_ratio, screen_height_ratio))
+
+    return tiny_font_size
+
+def getSmallFontDimensions(screen):
+    """
+    Gets the dimensions of the small font used for the game. 
+    
+    Keyword arguments :
+        screen: Surface
+            Surface resolution used for image representation
+    """
+    # Check if default screen dimensions
+    if screen.get_size() == (SCREEN_WIDTH, SCREEN_HEIGHT):
+        return SMALL_FONT_SIZE
+    
+    # Get current screen dimensions
+    screen_width = screen.get_width()
+    screen_height = screen.get_height()
+
+    # Get current screen ratios
+    screen_width_ratio = screen_width / SCREEN_WIDTH
+    screen_height_ratio = screen_height / SCREEN_HEIGHT
+
+    small_font_size = int(SMALL_FONT_SIZE * min(screen_width_ratio, screen_height_ratio))
+
+    return small_font_size
+
 def getBigFontDimensions(screen):
     """
     Gets the dimensions of the bigger font used for the game. 
@@ -122,6 +170,30 @@ def getBigFontDimensions(screen):
     big_font_size = int(BIG_FONT_SIZE * min(screen_width_ratio, screen_height_ratio))
 
     return big_font_size
+
+def getLargeFontDimensions(screen):
+    """
+    Gets the dimensions of the larger font used for the game. 
+    
+    Keyword arguments :
+        screen: Surface
+            Surface resolution used for image representation
+    """
+    # Check if default screen dimensions
+    if screen.get_size() == (SCREEN_WIDTH, SCREEN_HEIGHT):
+        return LARGE_FONT_SIZE
+    
+    # Get current screen dimensions
+    screen_width = screen.get_width()
+    screen_height = screen.get_height()
+
+    # Get current screen ratios
+    screen_width_ratio = screen_width / SCREEN_WIDTH
+    screen_height_ratio = screen_height / SCREEN_HEIGHT
+
+    large_font_size = int(LARGE_FONT_SIZE * min(screen_width_ratio, screen_height_ratio))
+
+    return large_font_size
 
 def getButtonDimensions(screen):
     """
@@ -255,6 +327,28 @@ def getEndScreenLoutishDimensions(screen):
     endscreen_loutish_image_height = screen_height * 0.4
 
     return endscreen_loutish_image_width, endscreen_loutish_image_height
+
+def getOptionLoutishDimensions(screen):
+    """
+    Gets the dimensions of the option's logo picture. 
+    
+    Keyword arguments :
+        screen: Surface
+            Surface resolution used for image representation
+    """
+    # Check if default screen dimensions
+    if screen.get_size() == (SCREEN_WIDTH, SCREEN_HEIGHT):
+        return optionLogoDimension.dimensions
+    
+    # Get current screen dimensions
+    screen_width = screen.get_width()
+    screen_height = screen.get_height()
+
+    # Get button dimensions BASED on current screen dimensions
+    option_loutish_image_width = screen_width * 0.4
+    option_loutish_image_height = screen_height * 0.4
+
+    return option_loutish_image_width, option_loutish_image_height
 
 def createButton(screen, position_x, position_y, button_width, button_height, button_outline, 
                   color_bg, color_outline, font, text, text_pos):

@@ -23,3 +23,6 @@
 <h3> <u> August 27 2025 </u> </h3>
     - Turned the screen's state values into a dedicated ScreenState class <br>
     - Added the files "future_patches" and "patch_notes" <br>
+
+<h3> <u> August 29 2025 </u> </h3>
+    - Implemented the basis of the option screen, with templates for later implementations <br>

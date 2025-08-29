@@ -1,5 +1,4 @@
 Option Screen:
-- Average
 - Favourite Image
 - Days Average Graphic
 - Detailled Statistics Button
