@@ -1,5 +1,4 @@
 Option Screen:
-- Favourite Image
 - Days Average Graphic
 - Detailled Statistics Button
     - Data for each session (scrolling list)

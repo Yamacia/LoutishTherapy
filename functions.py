@@ -416,3 +416,29 @@ def selectLoutishImage(image_id):
     images = next(os.walk("Loutish_Images"))[2]
     image = pygame.image.load(f"Loutish_Images/{images[image_id]}")
     return image
+
+def selectFavouriteLoutishImage():
+    """
+    Selects the corresponding Loutish image from the images folder (by it's ID)
+
+    Keyword arguments:
+        image_id : int
+            The ID of the image that we want to select
+    """
+
+    statistics = pd.read_csv("statistics.csv")
+    favourite_image = statistics["Last Image"].value_counts().idxmax()
+
+    image = pygame.image.load(f"Loutish_Images/{favourite_image}")
+    return image
+
+def getLoutishImageName(image_id):
+    """
+    Gets the name of the selected image (by its ID)
+
+    Keyword arguments:
+        image_id : int
+            The ID of the image that we want to select
+    """
+    images = next(os.walk("Loutish_Images"))[2]
+    return images[image_id]

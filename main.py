@@ -9,7 +9,8 @@ from endscreen import *
 if not os.path.isfile("statistics.csv"):
     statistics = pd.DataFrame(columns=[
         "Date",
-        "Image Count"
+        "Image Count",
+        "Last Image"
     ])
     statistics.to_csv('statistics.csv', index=False)
 
@@ -93,7 +94,7 @@ while True:
             elif current_screen_state.get_value() == ScreenValue.END.value:
                 current_screen_state = checkEndButtonClick(screen = screen, button_width = button_width,
                             button_height = button_height, button_spacing = button_spacing, mouse = mouse, image_counter = image_counter,
-                            current_screen_state = current_screen_state)
+                            image_id = LoutishImageID, current_screen_state = current_screen_state)
                 
         elif event.type == pygame.VIDEORESIZE:
             button_width, button_height = getButtonDimensions(screen = screen)
