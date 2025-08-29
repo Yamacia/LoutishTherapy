@@ -27,3 +27,4 @@
 <h3> <u> August 29 2025 </u> </h3>
     - Implemented the basis of the option screen, with templates for later implementations <br>
     - Implemented the "Favourite Image" in the option screen (statistics.csv adapted to save each session's last image) <br>
+    - Image Count now properly reset when re-entering the game <br>

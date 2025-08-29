@@ -18,10 +18,9 @@ if not os.path.isfile("statistics.csv"):
 screen = initializeGame()
 current_screen_state = initializeScreenState()
 
-# Generating first Loutish image
-number_images = len(next(os.walk("Loutish_Images"))[2]) - 1
-LoutishImageID = random.randint(0, number_images)
-image_counter = 1
+# Initialize Loutish Images
+LoutishImageID = 0
+image_counter = 0
 
 # Primary Buttons
 button_width, button_height = ButtonDimension.dimensions
@@ -77,9 +76,9 @@ while True:
 
             # Check in what screen we are in
             if current_screen_state.get_value() == ScreenValue.HOME.value:
-                current_screen_state = checkHomeButtonClick(screen = screen, button_width = button_width,
+                current_screen_state, LoutishImageID, image_counter = checkHomeButtonClick(screen = screen, button_width = button_width,
                             button_height = button_height, button_spacing = button_spacing, mouse = mouse,
-                            current_screen_state = current_screen_state)
+                            current_screen_state = current_screen_state, image_id = LoutishImageID, image_counter = image_counter)
                 
             elif current_screen_state.get_value() == ScreenValue.OPTION.value:
                 current_screen_state = checkOptionButtonClick(screen = screen, button_width = button_width,

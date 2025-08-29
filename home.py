@@ -89,7 +89,7 @@ def createHomeButtons(screen, button_width, button_height, button_spacing, butto
                      button_outline = button_outline, font = font, text = "Exit Application",
                      text_pos = third_button_text_pos)      
         
-def checkHomeButtonClick(screen, button_width, button_height, button_spacing, mouse, current_screen_state):
+def checkHomeButtonClick(screen, button_width, button_height, button_spacing, mouse, current_screen_state, image_id, image_counter):
     """
     Verifies if one of the home buttons has been clicked by the user.
 
@@ -128,7 +128,12 @@ def checkHomeButtonClick(screen, button_width, button_height, button_spacing, mo
 
     if checkMouseInButton(mouse = mouse, button_x = first_button_x, button_width = button_width, 
                           button_y = first_button_y, button_height = button_height):
-        current_screen_state.set_value(ScreenValue.GAME.value)     
+        current_screen_state.set_value(ScreenValue.GAME.value)
+        
+        # Generating first Loutish image
+        number_images = len(next(os.walk("Loutish_Images"))[2]) - 1
+        image_id = random.randint(0, number_images)
+        image_counter = 1     
 
     elif checkMouseInButton(mouse = mouse, button_x = second_button_x, button_width = button_width,
                             button_y = second_button_y, button_height = button_height):
@@ -138,7 +143,7 @@ def checkHomeButtonClick(screen, button_width, button_height, button_spacing, mo
                             button_y = third_button_y, button_height = button_height):
         pygame.quit()  
         sys.exit()
-    return current_screen_state
+    return current_screen_state, image_id, image_counter
 
 def createHome(screen, button_width, button_height, button_spacing, button_outline, font, mouse):
     """
@@ -159,6 +164,10 @@ def createHome(screen, button_width, button_height, button_spacing, button_outli
             System Font loading all characteristics of the desired font for the message
         mouse: tuple[int, int]
             The cursor position of the mouse
+        image_id: int
+            The ID of the selected Loutish image
+        image_counter: int
+            The number of Loutish images that have been generated so far
     """
     # Get Title logo with corresponding dimensions
     image = pygame.image.load("Game_Images/title_screen.png")

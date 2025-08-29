@@ -6,7 +6,6 @@ Option Screen:
     - Last image of session
     - Erase all data button (with confirmation message)
     - Exit Detailled Statistics Button
-- Exit Option Button
 
 Home Screen:
 - Moving stats on side (Favourite Image, Last Session Image)
