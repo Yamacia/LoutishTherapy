@@ -70,7 +70,7 @@ def createOptionStatistics(screen, font, screen_width, screen_height):
     favourite_image_y =  screen_height - endgame_card_height * 0.75 + IMAGE_SPACING
 
     favourite_image = selectFavouriteLoutishImage()
-    endscreen_loutish_dimensions = favouriteImageDimension.dimensions
+    endscreen_loutish_dimensions = getFavouriteLoutishDimensions(screen = screen)
     favourite_image = pygame.transform.scale(favourite_image, endscreen_loutish_dimensions)
     screen.blit(favourite_image, favourite_image.get_rect(center = (favourite_image_x, favourite_image_y)))
     

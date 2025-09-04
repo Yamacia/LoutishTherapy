@@ -31,3 +31,13 @@ class ScreenValue(Enum):
     GAME = 2
     END = 3
     OPTION = 4
+
+# Positions for Side Images on Home Screen
+class HomePosition(Enum):
+    LEFT = 1
+    RIGHT = 2
+    
+# All Side Image Types
+class SideImagePosition(Enum):
+    FAVOURITE = 1
+    LAST = 2

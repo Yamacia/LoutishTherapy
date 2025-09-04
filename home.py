@@ -182,3 +182,72 @@ def createHome(screen, button_width, button_height, button_spacing, button_outli
     createHomeButtons(screen = screen, button_width = button_width, button_height = button_height, 
                     button_spacing = button_spacing, button_outline = button_outline, primary_color = LOUTISH_COLOR,
                     font = font, mouse = mouse)
+    
+def createHomeSideImages(screen, favourite_image_left, favourite_image_right, last_image_left, last_image_right):
+    """
+    Generates both the user's favourite and last Loutish images
+    Positions them on both sides of the screen
+    Also makes them scroll down the screen over time
+
+    Keyword arguments:
+        screen: Surface
+            Surface resolution used for image representation
+        favourite_image_left: SideImage
+            The favourite image that will be displayed on the left side of the screen
+        favourite_image_right: SideImage
+            The favourite image that will be displayed on the right side of the screen  
+        last_image_left: SideImage
+            The user's last image that will be displayed on the left side of the screen  
+        last_image_right: SideImage
+            The user's last image that will be displayed on the right side of the screen        
+    """
+    # Favourite Image
+    
+    if favourite_image_left.get_y() < screen.get_height() + favourite_image_left.get_image().get_height():
+        favourite_image_left.set_y(favourite_image_left.get_y() + 5)
+    else:
+        favourite_image_left.set_y(- favourite_image_left.get_image().get_height())
+
+    if favourite_image_right.get_y() < screen.get_height() + favourite_image_right.get_image().get_height():
+        favourite_image_right.set_y(favourite_image_right.get_y() + 5)
+    else:
+        favourite_image_right.set_y(- favourite_image_right.get_image().get_height())
+
+    displayHomeSideImage(screen = screen, image = favourite_image_left)
+    displayHomeSideImage(screen = screen, image = favourite_image_right)
+
+    # Last Image
+
+    if last_image_left.get_y() < screen.get_height() + last_image_left.get_image().get_height():
+        last_image_left.set_y(last_image_left.get_y() + 5)
+    else:
+        last_image_left.set_y(- last_image_left.get_image().get_height())
+
+    if last_image_right.get_y() < screen.get_height() + last_image_right.get_image().get_height():
+        last_image_right.set_y(last_image_right.get_y() + 5)
+    else:
+        last_image_right.set_y(- last_image_right.get_image().get_height())
+
+    displayHomeSideImage(screen = screen, image = last_image_left)
+    displayHomeSideImage(screen = screen, image = last_image_right)
+
+def displayHomeSideImage(screen, image):
+    """
+    Displays the image and its corresponding text on 
+    its desired position
+
+    Keyword arguments:
+        screen: Surface
+            Surface resolution used for image representation
+        image: SideImage
+            Image to display
+    """
+    image_x, image_y = image.get_x(), image.get_y()
+    image_width = image.get_image().get_width() 
+    image_height = image.get_image().get_height()
+
+    screen.blit(image.image, (image_x, image_y))
+    font = pygame.font.SysFont(image.text_font, image.text_size)
+    message = font.render(image.get_text(), True, OUTLINE)
+    message_position = message.get_rect(center = (image_width / 2, image_height / 2))
+    screen.blit(message, (message_position.x + image_x, image_y - image.text_size))

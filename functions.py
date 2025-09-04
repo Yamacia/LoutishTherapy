@@ -350,6 +350,28 @@ def getOptionLoutishDimensions(screen):
 
     return option_loutish_image_width, option_loutish_image_height
 
+def getFavouriteLoutishDimensions(screen):
+    """
+    Gets the dimensions of the option's favourite Loutish picture. 
+    
+    Keyword arguments :
+        screen: Surface
+            Surface resolution used for image representation
+    """ 
+    # Check if default screen dimensions
+    if screen.get_size() == (SCREEN_WIDTH, SCREEN_HEIGHT):
+        return favouriteImageDimension.dimensions
+    
+    # Get current screen dimensions
+    screen_width = screen.get_width()
+    screen_height = screen.get_height()
+
+    # Get button dimensions BASED on current screen dimensions
+    option_loutish_image_width = screen_width * 0.25
+    option_loutish_image_height = screen_height * 0.25
+
+    return option_loutish_image_width, option_loutish_image_height
+
 def createButton(screen, position_x, position_y, button_width, button_height, button_outline, 
                   color_bg, color_outline, font, text, text_pos):
     """
@@ -419,11 +441,8 @@ def selectLoutishImage(image_id):
 
 def selectFavouriteLoutishImage():
     """
-    Selects the corresponding Loutish image from the images folder (by it's ID)
-
-    Keyword arguments:
-        image_id : int
-            The ID of the image that we want to select
+    Selects the favourite Loutish image from the images folder 
+    The favourite image is the one that the user that ended the game the most on
     """
 
     statistics = pd.read_csv("statistics.csv")
@@ -431,6 +450,70 @@ def selectFavouriteLoutishImage():
 
     image = pygame.image.load(f"Loutish_Images/{favourite_image}")
     return image
+
+def createHomeFavouriteLoutishImage(screen, position):
+    """
+    Gets the favourite Loutish image from the images folder (by it's ID) and 
+    positions it on the correct side of the home screen and positions it on the
+    corresponding side of the screen
+
+    Keyword arguments:
+        image_id : int
+            The ID of the image that we want to select
+    """
+
+    screen_width = screen.get_width()
+
+    image = selectFavouriteLoutishImage()
+    loutish_dimensions = getFavouriteLoutishDimensions(screen = screen)
+    image = pygame.transform.scale(image, loutish_dimensions)
+
+    # Positions the image on either side of the home screen
+    if position == HomePosition.LEFT:
+        favourite_image = SideImage(image = image, x = 0, y = - image.get_height(), type = SideImagePosition.FAVOURITE)
+    if position == HomePosition.RIGHT:
+        favourite_image = SideImage(image = image, x = screen_width - image.get_width(), y = - image.get_height(), type = SideImagePosition.FAVOURITE)
+
+    return favourite_image
+
+def selectLastLoutishImage():
+    """
+    Selects the favourite Loutish image from the images folder 
+    The favourite image is the one that the user that ended the game the most on
+    """
+
+    statistics = pd.read_csv("statistics.csv")
+    last_image = statistics["Last Image"].iloc[-1]
+
+    image = pygame.image.load(f"Loutish_Images/{last_image}")
+    return image
+
+def selectHomeLastLoutishImage(screen, position):
+    """
+    Selects the favourite Loutish image from the images folder (by it's ID) and 
+    positions it on the correct side of the home screen
+
+    Keyword arguments:
+        screen: Surface 
+            Surface resolution used for image representation
+        position: SideImagePosition(Enum)
+            The position of the image on the screen
+    """
+
+    screen_width = screen.get_width()
+    screen_height = screen.get_height()
+
+    image = selectLastLoutishImage()
+    loutish_dimensions = getFavouriteLoutishDimensions(screen = screen)
+    image = pygame.transform.scale(image, loutish_dimensions)
+
+    # Positions the image on either side of the home screen
+    if position == HomePosition.LEFT:
+        favourite_image = SideImage(image = image, x = 0, y = screen_height / 2, type = SideImagePosition.LAST)
+    if position == HomePosition.RIGHT:
+        favourite_image = SideImage(image = image, x = screen_width - image.get_width(), y = screen_height / 2, type = SideImagePosition.LAST)
+
+    return favourite_image
 
 def getLoutishImageName(image_id):
     """
