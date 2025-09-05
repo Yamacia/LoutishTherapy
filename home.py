@@ -222,12 +222,12 @@ def positionHomeSideImages(screen, favourite_image_left, favourite_image_right, 
     # Favourite Image
     
     if favourite_image_left.get_y() < screen.get_height() + favourite_image_left.get_image().get_height():
-        favourite_image_left.set_y(favourite_image_left.get_y() + 5)
+        favourite_image_left.set_y(favourite_image_left.get_y() + favourite_image_left.scrolling_speed)
     else:
         favourite_image_left.set_y(- favourite_image_left.get_image().get_height())
 
     if favourite_image_right.get_y() < screen.get_height() + favourite_image_right.get_image().get_height():
-        favourite_image_right.set_y(favourite_image_right.get_y() + 5)
+        favourite_image_right.set_y(favourite_image_right.get_y() + favourite_image_right.scrolling_speed)
     else:
         favourite_image_right.set_y(- favourite_image_right.get_image().get_height())
 
@@ -237,12 +237,12 @@ def positionHomeSideImages(screen, favourite_image_left, favourite_image_right, 
     # Last Image
 
     if last_image_left.get_y() < screen.get_height() + last_image_left.get_image().get_height():
-        last_image_left.set_y(last_image_left.get_y() + 5)
+        last_image_left.set_y(last_image_left.get_y() + last_image_left.scrolling_speed)
     else:
         last_image_left.set_y(- last_image_left.get_image().get_height())
 
     if last_image_right.get_y() < screen.get_height() + last_image_right.get_image().get_height():
-        last_image_right.set_y(last_image_right.get_y() + 5)
+        last_image_right.set_y(last_image_right.get_y() + last_image_right.scrolling_speed)
     else:
         last_image_right.set_y(- last_image_right.get_image().get_height())
 

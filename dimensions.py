@@ -3,6 +3,9 @@
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 
+# Side Image Scrolling Speed
+SCROLLING_SPEED = SCREEN_HEIGHT // 150
+
 # Button Dimensions
 
 BUTTON_WIDTH = (SCREEN_WIDTH // 3) * 0.95
