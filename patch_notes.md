@@ -36,3 +36,4 @@
     - Moved algorithms and methods to more fitting functions and files <br>
     - Side images are now correctly displayed when resizing the application <br>
     - Side images scrolling speed is now bounded to image and is correctly adjusted when resizing the application <br>
+    - Added a requirements.txt file to group all used Python librairies <br>
