@@ -31,3 +31,6 @@
 
 <h3> <u> September 4 2025 </u> </h3>
     - Implemented favourite and last session images on sides of home screen <br>
+
+<h3> <u> September 5 2025 </u> </h3>
+    - Moved algorithms and methods to more fitting functions and files <br>

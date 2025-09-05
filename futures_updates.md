@@ -9,3 +9,6 @@ Option Screen:
 
 Game Screen:
 - Improve Randomized Image Animation
+
+Miscellanious:
+- Minimize magic numbers

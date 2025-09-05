@@ -1,5 +1,3 @@
-from functions import *
-from classes import *
 from home import *
 from game import *
 from options import *
@@ -37,13 +35,8 @@ font = pygame.font.SysFont(MAIN_FONT, FONT_SIZE)
 # Loading music
 loadMusic()
 
-# Set up favourite image and position
-favourite_image_left = createHomeFavouriteLoutishImage(screen = screen, position = HomePosition.LEFT)
-favourite_image_right = createHomeFavouriteLoutishImage(screen = screen, position = HomePosition.RIGHT)
-
-# Set up last session image and position
-last_image_left = selectHomeLastLoutishImage(screen = screen, position = HomePosition.LEFT)
-last_image_right = selectHomeLastLoutishImage(screen = screen, position = HomePosition.RIGHT)
+# Set up favourite images, last session images and their position
+favourite_image_left, favourite_image_right, last_image_left, last_image_right = createHomeSideImages(screen = screen)
 
 # Set up the clock for frame rate control  
 clock = pygame.time.Clock()  
@@ -59,7 +52,7 @@ while True:
         # Home Screen
         createHome(screen = screen, button_width = button_width, button_height = button_height, button_spacing = button_spacing,
                    button_outline = button_outline, font = font, mouse = mouse)
-        createHomeSideImages(screen = screen, favourite_image_left = favourite_image_left, favourite_image_right = favourite_image_right,
+        positionHomeSideImages(screen = screen, favourite_image_left = favourite_image_left, favourite_image_right = favourite_image_right,
                              last_image_left = last_image_left, last_image_right = last_image_right)
         
     if current_screen_state.get_value() == ScreenValue.OPTION.value:
@@ -110,10 +103,9 @@ while True:
             button_spacing = getButtonSpacing(screen = screen)
             button_outline = getButtonOutlineDimensions(screen = screen)
             font = pygame.font.SysFont(MAIN_FONT, getFontDimensions(screen = screen))
-            favourite_image_left.resize(screen = screen, position = HomePosition.LEFT)
-            favourite_image_right.resize(screen = screen, position = HomePosition.RIGHT)
-            last_image_left.resize(screen = screen, position = HomePosition.LEFT)
-            last_image_right.resize(screen = screen, position = HomePosition.RIGHT)
+            resizeHomeSideImages(screen = screen, 
+                                 favourite_image_left = favourite_image_left, favourite_image_right = favourite_image_right,
+                                 last_image_left = last_image_left, last_image_right = last_image_right)
             pygame.display.update()
 
         elif event.type == pygame.QUIT:  

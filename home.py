@@ -183,10 +183,28 @@ def createHome(screen, button_width, button_height, button_spacing, button_outli
                     button_spacing = button_spacing, button_outline = button_outline, primary_color = LOUTISH_COLOR,
                     font = font, mouse = mouse)
     
-def createHomeSideImages(screen, favourite_image_left, favourite_image_right, last_image_left, last_image_right):
+def createHomeSideImages(screen):
     """
-    Generates both the user's favourite and last Loutish images
-    Positions them on both sides of the screen
+    Generates the user's favourite and last Loutish images to be displayed on both sides of the screen
+
+    Keyword arguments:
+        screen: Surface
+            Surface resolution used for image representation
+    """
+    # Favourite image
+    favourite_image_left = createHomeFavouriteLoutishImage(screen = screen, position = HomePosition.LEFT)
+    favourite_image_right = createHomeFavouriteLoutishImage(screen = screen, position = HomePosition.RIGHT)
+
+    # Set up last session image 
+    last_image_left = selectHomeLastLoutishImage(screen = screen, position = HomePosition.LEFT)
+    last_image_right = selectHomeLastLoutishImage(screen = screen, position = HomePosition.RIGHT)
+
+    return favourite_image_left, favourite_image_right, last_image_left, last_image_right
+    
+def positionHomeSideImages(screen, favourite_image_left, favourite_image_right, last_image_left, last_image_right):
+    """
+    Gets both the user's favourite and last Loutish images
+    And positions them on both sides of the screen
     Also makes them scroll down the screen over time
 
     Keyword arguments:
@@ -251,3 +269,24 @@ def displayHomeSideImage(screen, image):
     message = font.render(image.get_text(), True, OUTLINE)
     message_position = message.get_rect(center = (image_width / 2, image_height / 2))
     screen.blit(message, (message_position.x + image_x, image_y - image.text_size))
+
+def resizeHomeSideImages(screen, favourite_image_left, favourite_image_right, last_image_left, last_image_right):
+    """
+    When resizing the application's window, resizes the images to correctly fit the new surface
+
+    Keyword arguments:
+        screen: Surface 
+            Surface resolution used for image representation
+        favourite_image_left: SideImage
+            The favourite image that will be displayed on the left side of the screen
+        favourite_image_right: SideImage
+            The favourite image that will be displayed on the right side of the screen  
+        last_image_left: SideImage
+            The user's last image that will be displayed on the left side of the screen  
+        last_image_right: SideImage
+            The user's last image that will be displayed on the right side of the screen 
+    """
+    favourite_image_left.resize(screen = screen, position = HomePosition.LEFT)
+    favourite_image_right.resize(screen = screen, position = HomePosition.RIGHT)
+    last_image_left.resize(screen = screen, position = HomePosition.LEFT)
+    last_image_right.resize(screen = screen, position = HomePosition.RIGHT)
